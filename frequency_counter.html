@@ -10,6 +10,28 @@
   <script>
     // frequency_counter 빈도수 세기
 
+    // arr, arr2 loop for each -> {for of} for array
+    function frequencyCounterObj(arr) {
+      const result = {};
+      for(const v of arr) {
+        // 키값은 원래의 값(대문자->소문자)
+        const chr = v.toLowerCase();
+        // 루프를 돌면서 객체를 만든다,
+        // value 는 카운터
+        if(!result[chr]) result[chr] = 1;
+        else result[chr]++;
+      }
+      return result;
+    }
+
+    // obj1의 loop 를 돌면서 obj2의 카운터와 일치하는지 확인한다
+    // if loop 중간에 값이 틀리면 flase
+    function isSameObj (obj1, obj2) {
+      for(const property in obj1) {
+        if(obj1[property] !== obj2[property]) return false;
+      }
+    }
+
     function validAnagram(arr1, arr2) {
       // # two array & 문자열이 순서와 상관없이 같은지 비교한다. (Compare with both String in any order)
       // if diff length => false 
@@ -17,29 +39,12 @@
       // if same array length && value is blank
       if(arr1.length < 1 && arr2.length < 1) return true;
 
-      const obj1 = {};
-      const obj2 = {};
-      // arr, arr2 loop for each -> {for of} for array
-      for(const v of arr1) {
-        // 키값은 원래의 값(대문자->소문자)
-        const chr = v.toLowerCase();
-        // 루프를 돌면서 객체를 만든다,
-        // value 는 카운터
-        if(!obj1[chr]) obj1[chr] = 1;
-        else obj1[chr]++;
-      }
-      for(const v of arr2) {
-        const chr = v.toLowerCase();
-        // 루프를 돌면서 객체를 만든다, 
-        if(!obj2[chr]) obj2[chr] = 1;
-        else obj2[chr]++;
-      }
+      // arr, arr2 to obj1 & obj2
+      const obj1 = frequencyCounterObj(arr1);
+      const obj2 = frequencyCounterObj(arr2);;
 
-      // obj1의 loop 를 돌면서 obj2의 카운터와 일치하는지 확인한다
-      // if loop 중간에 값이 틀리면 flase
-      for(const property in obj1) {
-        if(obj1[property] !== obj2[property]) return false;
-      }
+      // 
+      if(!isSameObj(obj1, obj2)) return false;
       // if loop를 다돌면 true
       return true
     }
